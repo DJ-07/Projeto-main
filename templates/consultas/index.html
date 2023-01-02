@@ -1,0 +1,81 @@
+{% extends '_base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Agendar consultas </h4>
+                <div class="text-right mr-3">
+                    <div class="text-right mr-3">
+                        {%if not is_Alunos%}
+                        <a href="/pacientes/">
+                            <button type="button" class="btn mb-1 btn-info">
+                                Lista de pacientes <span class="btn-icon-right"></span>
+                            </button>
+                        </a>                   
+                        <a href="/consultas/criar">
+                            <button type="button" class="btn mb-1 btn-info">
+                                Adicionar consulta <span class="btn-icon-right"><i class="fa fa-plus"></i></span>
+                            </button>
+                        </a>
+                        {%endif%} 
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table header-border">
+                        <thead>
+                            <tr>
+                                <th width="30%">Psicologo</th>
+                                <th width="40%">Data da consulta</th>
+                                <th> </th>
+                                <th> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if consultas %}
+                            {% for c in consultas %}
+                                <tr>
+                                    <td> <a href="/psicologo/detail">{{ c.CRP }}</a></td>
+                                    <td> {{ c.data }} </td>
+                                    {%if is_Alunos%}
+                                    <td>
+                                        <a href="/consultas/editar/{{ c.id }}">
+                                            <button type="button" class="btn mb-1 btn-primary">
+                                                Solicitar consulta <span class="btn-icon-right"> <i class="fa fa-edit"></i> </span>
+                                            </button>
+                                        </a>
+                                    </td>
+                                    {%else%}
+                                     <td>
+                                        <a href="/consultas/editarPsi/{{ c.id }}">
+                                            <button type="button" class="btn mb-1 btn-primary">
+                                                Editar <span class="btn-icon-right"></span>
+                                             </button>
+                                        </a>
+                                     </td>
+                                    <td>
+                                        <a href="/consultas/excluir/{{ c.id }}">
+                                            <button type="button" class="btn mb-1 btn-danger">
+                                                Excluir <span class="btn-icon-right"></span>
+                                            </button>
+                                        </a>
+                                    </td>
+                                    {%endif%}
+                                </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td>Não há consultas no momento.</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
